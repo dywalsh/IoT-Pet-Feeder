@@ -72,6 +72,15 @@ void turn_anticlockwise (struct device *pwm_dev){
 			return;
 		}
 }
+
+void fill_up(struct device *pwm_dev){
+	turn_clockwise(pwm_dev);
+	pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
+	k_sleep(MSEC_PER_SEC);
+	turn_anticlockwise(pwm_dev);
+	pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
+}
+
 void main(void)
 {
 	//setup
@@ -79,7 +88,6 @@ void main(void)
 	struct device *btn_dev;
 	u32_t cur_val;
 	u32_t last_val = 1;
-	u32_t motor = 0;
 	btn_dev = device_get_binding(BTN_PORT);
 	gpio_pin_configure(btn_dev, BTN, GPIO_DIR_IN | GPIO_PUD_PULL_UP);
 	printk("PWM servo control 90degree clockwise -> 90degree anticlockwise\n");
@@ -94,18 +102,7 @@ void main(void)
 		gpio_pin_read(btn_dev, BTN, &cur_val);
 		if (cur_val == 0 && last_val == 1) {
 			printk("Button press detected ");
-			if(motor == 0){
-				turn_clockwise(pwm_dev);
-				motor = 1;
-			}
-			else if(motor == 1){
-				turn_anticlockwise(pwm_dev);
-				motor = 0;
-			}
-		}
-		if (pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0)) {
-			printk("pwm pin set fails\n");
-			return;
+			fill_up(pwm_dev);
 		}
 		last_val = cur_val;		
 	}
