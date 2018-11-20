@@ -40,7 +40,7 @@
           "padding": "8px",
           "settings": {
             "maxValue": 100,
-            "startAngle": 45,
+            "startAngle": 0,
             "ticksAngle": 270,
             "showBorder": true,
             "defaultColor": "#e65100",
@@ -52,7 +52,6 @@
             "colorMinorTicks": "#666",
             "minorTicks": 10,
             "valueInt": 3,
-            "valueDec": 0,
             "highlightsWidth": 15,
             "valueBox": true,
             "animation": true,
@@ -88,12 +87,13 @@
               "shadowColor": "rgba(0, 0, 0, 0.49)",
               "color": "#444"
             },
-            "minValue": -100,
+            "minValue": 0,
             "colorNeedleShadowDown": "rgba(188,143,143,0.45)",
             "colorValueBoxRect": "#888",
             "colorValueBoxRectEnd": "#666",
             "colorValueBoxBackground": "#babab2",
-            "colorValueBoxShadow": "rgba(0,0,0,1)"
+            "colorValueBoxShadow": "rgba(0,0,0,1)",
+            "majorTicksCount": 4
           },
           "title": "Radial gauge - Canvas Gauges",
           "dropShadow": true,
@@ -101,7 +101,11 @@
           "titleStyle": {
             "fontSize": "16px",
             "fontWeight": 400
-          }
+          },
+          "widgetStyle": {},
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {}
         },
         "id": "94e035f6-dc59-576c-812d-f26ec2d4d6c3"
       },
@@ -273,7 +277,7 @@
           "type": "singleEntity",
           "singleEntity": {
             "entityType": "DEVICE",
-            "id": "DEVICE_ID_TO_SWAP"
+            "id": "c2039fe0-e23d-11e8-97c1-55cfd1a5b57a"
           },
           "resolveMultiple": false
         }
