@@ -1,0 +1,12 @@
+
+*.jdebug
+
+rpc_handler/tb_device\.jdebug\.user
+
+rpc_handler/terminal\.glue
+
+rpc_handler/cmake-build-debug/CMakeFiles/
+
+rpc_handler/cmake-build-debug/CMakeCache\.txt
+
+*.user
