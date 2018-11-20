@@ -106,6 +106,17 @@ void handle_putLights(char *json, int json_len)
 	putLights(rx_rpc.params.ledno, rx_rpc.params.value);
 }
 
+void handle_fillUpFood(char *json, int json_len)
+{
+	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
+
+	putLights(0, true);
+	putLights(1, true);
+	putLights(2, true);
+	putLights(3, true);
+}
+
+
 /*
  * Process an RPC request received from the thingsboard instance
  */
@@ -126,12 +137,9 @@ void handle_rpc(char *json, int json_len)
 	if ( strncmp(&json[11], "putLights", strlen("putLights")) == 0 ) {
 		handle_putLights(json, json_len);
 	}
-
-	/*
-	else if ( strncmp(&json[11], "putLights", strlen("myMethod")) == 0 ) {
-		handle_myMethod(json, json_len);
+	else if ( strncmp(&json[11], "fillUpFood", strlen("fillUpFood")) == 0 ) {
+		handle_fillUpFood(json, json_len);
 	}
-	*/
 }
 
 /* The signature of this routine must match the connect callback declared at
