@@ -20,7 +20,7 @@ struct device *btn_dev;
 struct gpio_callback btn_callback;
 
 u32_t state[4];
-u32_t weight = 0;
+int weight = 0;
 
 int btn_alert_handler(struct k_alert *alert);
 K_ALERT_DEFINE(btn_alert, btn_alert_handler, 10);
@@ -38,7 +38,7 @@ int btn_alert_handler(struct k_alert *alert)
 {
 	int value;
 	char payload[16];
-
+	int newWeight = weight;
     /* Context: Zephy kernel workqueue thread */
 
 	printf("Button event!\n");
@@ -49,15 +49,19 @@ int btn_alert_handler(struct k_alert *alert)
 		gpio_pin_read(btn_dev, btn_arr[i], &value);
 		if (value == 0) {
 			if (i == 0 && weight >= 25) {
-				weight -= 25;
+				newWeight = weight - 25;
 			} else if (i == 1 && weight <= 75) {
-				weight += 25;
+				newWeight = weight + 25;
 			}
-            /* Formulate JSON in the format expected by thingsboard.io */
-			snprintf(payload, sizeof(payload), "{\"weight\":%d}", weight);
-			printf("weight %d\n", weight);
 
-			tb_publish_telemetry(payload);
+			if (newWeight != weight) {
+				weight = newWeight;
+	            /* Formulate JSON in the format expected by thingsboard.io */
+				snprintf(payload, sizeof(payload), "{\"weight\":%d}", weight);
+				printf("weight %d\n", weight);
+				tb_publish_telemetry(payload);
+			}
+
 			state[i] = value;
 		}
 	}
