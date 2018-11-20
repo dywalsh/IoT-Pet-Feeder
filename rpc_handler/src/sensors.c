@@ -47,7 +47,7 @@ int btn_alert_handler(struct k_alert *alert)
 
 	for (u32_t i = 0; i < 2; i++) {
 		gpio_pin_read(btn_dev, btn_arr[i], &value);
-		if (value != state[i]) {
+		if (value == 0) {
 			if (i == 0 && weight >= 25) {
 				weight -= 25;
 			} else if (i == 1 && weight <= 75) {
@@ -55,6 +55,8 @@ int btn_alert_handler(struct k_alert *alert)
 			}
             /* Formulate JSON in the format expected by thingsboard.io */
 			snprintf(payload, sizeof(payload), "{\"weight\":%d}", weight);
+			printf("weight %d\n", weight);
+
 			tb_publish_telemetry(payload);
 			state[i] = value;
 		}
