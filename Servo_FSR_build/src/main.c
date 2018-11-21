@@ -158,12 +158,16 @@ void turn_anticlockwise (struct device *pwm_dev){
 		}
 }
 
-void fill_up(struct device *pwm_dev){
-	turn_clockwise(pwm_dev);
-	pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
-	k_sleep(MSEC_PER_SEC);
-	turn_anticlockwise(pwm_dev);
-	pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
+void fill_up(struct device *pwm_dev, int sample){
+	while(sample < 100){
+		turn_clockwise(pwm_dev);
+		pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
+		k_sleep(MSEC_PER_SEC);
+		turn_anticlockwise(pwm_dev);
+		pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
+		sample = sample + 25;
+		k_sleep(MSEC_PER_SEC);
+	}
 }
 
 //given the current time, calculate the length of time until the next feeding time.
@@ -197,13 +201,43 @@ u32_t get_time_to(u32_t start_time, u32_t end_time)
     return time_diff_in_mins * 60000;
 }
 
+int sampling()
+{
+	int sample;
+	int bowlFill;
+	for(int i = 0; i < 4; i++){
+		k_sleep(500);
+		printk("\nSampling ... ");
+
+		sample = sample_sensor(ADC_1ST_CHANNEL_ID);
+
+		if(sample < 200){
+			printf("Bowl is emptyish");
+			bowlFill = 0;
+		} else if(sample >= 200 && sample <= 370){
+			printf("Bowl is 1/4 fullish");
+			bowlFill = 25;
+		} else if(sample > 370 && sample <= 500){
+			printf("Bowl is 1/2 fullish");
+			bowlFill = 50;
+		} else if(sample > 500 && sample <= 580){
+			printf("Bowl is 3/4 fullish");
+			bowlFill = 75;
+		} else{
+			printf("Bowl is fullish");
+			bowlFill = 100;
+		}
+
+		printk("%d \n", sample);
+	}
+	return bowlFill;
+}
 
 
 
 void main(void)
 {
-	int sample;
-
+	int a;
 	printf("Preparing ADC\n");
 
 	//setup
@@ -226,6 +260,7 @@ void main(void)
 	/* capture initial time stamp */
 	time_stamp = k_uptime_get_32();
 	u32_t time_until = get_time_to(1501, 1502) + time_stamp;
+	time_until = time_until / 6;
 	printf("%" PRIu32 "\n", time_stamp);
 	printf("%" PRIu32 "\n", time_until);
 
@@ -233,31 +268,16 @@ void main(void)
 
 	while (true) {
 
-		// delay between samples
-		k_sleep(500);
-		printk("\nSampling ... ");
 
-		sample = sample_sensor(ADC_1ST_CHANNEL_ID);
-
-		if(sample < 200){
-			printf("Bowl is emptyish");
-		} else if(sample >= 200 && sample <= 370){
-			printf("Bowl is 1/4 fullish");
-		} else if(sample > 370 && sample <= 500){
-			printf("Bowl is 1/2 fullish");
-		} else if(sample > 500 && sample <= 580){
-			printf("Bowl is 3/4 fullish");
-		} else{
-			printf("Bowl is fullish");
-		}
-
-		printk("%d \n", sample);
+		
 
 		/* compute how long the work took (also updates the time stamp) */
 		milliseconds_spent = k_uptime_get_32();
 		if(milliseconds_spent >= (time_until) && milliseconds_spent <=(time_until+1000)){
+			a = sampling();
+			printf("%d sample \n", a);
 			printf("%" PRIu32 "\n", milliseconds_spent);
-			fill_up(pwm_dev);
+			fill_up(pwm_dev, 50);
 			k_sleep(MSEC_PER_SEC);
 			time_stamp = k_uptime_get_32();
 		}
