@@ -10,6 +10,7 @@
 #include <misc/printk.h>
 #include <nrf_gpio.h>
 #include <pwm.h>
+#include <gpio.h>
 
 
 #define ADC_DEVICE_NAME		CONFIG_ADC_0_NAME
@@ -28,11 +29,9 @@
 #define PORT	CONFIG_GPIO_NRF5_P0_DEV_NAME
 #define PIN		11
 
-#define BTN_PORT	SW0_GPIO_NAME
-#define BTN			SW0_GPIO_PIN
+#define BTN_PORT	SW0_GPIO_CONTROLLER
+#define BTN		SW0_GPIO_PIN
 
-#define LED_PORT	LED0_GPIO_PORT
-#define LED			LED0_GPIO_PIN
 
 #define PERIOD (USEC_PER_SEC / 50)
 #define BUFFER_SIZE  6
@@ -210,12 +209,10 @@ void main(void)
 	//setup
 	struct device *pwm_dev;
 	struct device *btn_dev;
-	struct device *led_dev;
+	
 	u32_t time_stamp;
 	u32_t milliseconds_spent;
 	
-	led_dev = device_get_binding(LED_PORT);
-	gpio_pin_configure(led_dev, LED, GPIO_DIR_OUT);
 
 	btn_dev = device_get_binding(BTN_PORT);
 	gpio_pin_configure(btn_dev, BTN, GPIO_DIR_IN | GPIO_PUD_PULL_UP);
@@ -258,14 +255,12 @@ void main(void)
 
 		/* compute how long the work took (also updates the time stamp) */
 		milliseconds_spent = k_uptime_get_32();
-		if(milliseconds_spent >= (time_until) && milliseconds_spent <=(time_until+1500)){
+		if(milliseconds_spent >= (time_until) && milliseconds_spent <=(time_until+1000)){
 			printf("%" PRIu32 "\n", milliseconds_spent);
-			gpio_pin_write(led_dev, LED, 0);
 			fill_up(pwm_dev);
 			k_sleep(MSEC_PER_SEC);
 			time_stamp = k_uptime_get_32();
 		}
-		gpio_pin_write(led_dev, LED, 1);
 
 	}
 }
