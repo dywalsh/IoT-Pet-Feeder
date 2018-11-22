@@ -1,0 +1,68 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           ARM
+  Version:                           0x1
+  Entry point address:               0x28e9
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          467576 (bytes into file)
+  Flags:                             0x5000200, Version5 EABI, soft-float ABI
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         4
+  Size of section headers:           40 (bytes)
+  Number of section headers:         26
+  Section header string table index: 25
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] text              PROGBITS        00000000 0000b4 005038 00 WAX  0   0  4
+  [ 2] .ARM.exidx        ARM_EXIDX       00005038 0050ec 000008 00  AL  1   0  4
+  [ 3] devconfig         PROGBITS        00005040 0050f4 000084 00  WA  0   0  4
+  [ 4] log_const_section PROGBITS        000050c4 005178 000028 00   A  0   0  4
+  [ 5] log_backends_sect PROGBITS        000050ec 0051a0 000010 00   A  0   0  4
+  [ 6] rodata            PROGBITS        000050fc 0051b0 0009d0 00   A  0   0  4
+  [ 7] bss               NOBITS          20000000 005d00 0007bc 00  WA  0   0  8
+  [ 8] noinit            NOBITS          200007c0 005d00 0014e0 00  WA  0   0  8
+  [ 9] datas             PROGBITS        20001ca0 005b80 0000b4 00  WA  0   0  4
+  [10] initlevel         PROGBITS        20001d54 005c34 000084 00  WA  0   0  4
+  [11] _static_thread_ar PROGBITS        20001dd8 005cb8 000030 00  WA  0   0  4
+  [12] _k_mutex_area     PROGBITS        20001e08 005ce8 000014 00  WA  0   0  4
+  [13] .comment          PROGBITS        00000000 005cfc 00007f 01  MS  0   0  1
+  [14] .debug_aranges    PROGBITS        00000000 005d80 001030 00      0   0  8
+  [15] .debug_info       PROGBITS        00000000 006db0 0323d8 00      0   0  1
+  [16] .debug_abbrev     PROGBITS        00000000 039188 009e7e 00      0   0  1
+  [17] .debug_line       PROGBITS        00000000 043006 00c1a9 00      0   0  1
+  [18] .debug_frame      PROGBITS        00000000 04f1b0 002508 00      0   0  4
+  [19] .debug_str        PROGBITS        00000000 0516b8 007845 01  MS  0   0  1
+  [20] .debug_loc        PROGBITS        00000000 058efd 00dd84 00      0   0  1
+  [21] .debug_ranges     PROGBITS        00000000 066c88 002290 00      0   0  8
+  [22] .ARM.attributes   ARM_ATTRIBUTES  00000000 068f18 000031 00      0   0  1
+  [23] .symtab           SYMTAB          00000000 068f4c 0053f0 10     24 769  4
+  [24] .strtab           STRTAB          00000000 06e33c 003e1b 00      0   0  1
+  [25] .shstrtab         STRTAB          00000000 072157 000121 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  y (purecode), p (processor specific)
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  EXIDX          0x0050ec 0x00005038 0x00005038 0x00008 0x00008 R   0x4
+  LOAD           0x0000b4 0x00000000 0x00000000 0x05acc 0x05acc RWE 0x4
+  LOAD           0x005b80 0x20001ca0 0x00005acc 0x0017c 0x0017c RW  0x4
+  LOAD           0x005d00 0x20000000 0x20000000 0x00000 0x01ca0 RW  0x8
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .ARM.exidx 
+   01     text .ARM.exidx devconfig log_const_sections log_backends_sections rodata 
+   02     datas initlevel _static_thread_area _k_mutex_area 
+   03     bss noinit 
