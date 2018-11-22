@@ -116,6 +116,12 @@ void handle_fillUpFood(char *json, int json_len)
 	putLights(3, true);
 }
 
+/* Handles receiving time broadcasts*/
+void handle_setTime(char *json, int json_len)
+{
+	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
+}
+
 
 /*
  * Process an RPC request received from the thingsboard instance
@@ -140,6 +146,9 @@ void handle_rpc(char *json, int json_len)
 	else if ( strncmp(&json[11], "fillUpFood", strlen("fillUpFood")) == 0 ) {
 		handle_fillUpFood(json, json_len);
 	}
+	else if ( strncmp(&json[11], "time", strlen("time")) == 0 ) {
+		handle_setTime(json, json_len);
+	} 
 }
 
 /* The signature of this routine must match the connect callback declared at
