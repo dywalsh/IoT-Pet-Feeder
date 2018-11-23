@@ -1,7 +1,3 @@
-//
-// Very basic photoresistor example
-//
-
 #include <zephyr.h>
 #include <board.h>
 #include <device.h>
@@ -11,7 +7,8 @@
 #include <nrf_gpio.h>
 #include <pwm.h>
 #include <gpio.h>
-
+#include "fsr.h"
+#include "servo.h"
 
 #define ADC_DEVICE_NAME		CONFIG_ADC_0_NAME
 #define ADC_RESOLUTION		10
@@ -35,204 +32,6 @@
 
 #define PERIOD (USEC_PER_SEC / 50)
 #define BUFFER_SIZE  6
-
-static s16_t m_sample_buffer[BUFFER_SIZE];
-
-static const struct adc_channel_cfg m_1st_channel_cfg = {
-	.gain             = ADC_GAIN,
-	.reference        = ADC_REFERENCE,
-	.acquisition_time = ADC_ACQUISITION_TIME,
-	.channel_id       = ADC_1ST_CHANNEL_ID,
-#if defined(CONFIG_ADC_CONFIGURABLE_INPUTS)
-	.input_positive   = ADC_1ST_CHANNEL_INPUT,
-#endif
-};
-#if defined(ADC_2ND_CHANNEL_ID)
-static const struct adc_channel_cfg m_2nd_channel_cfg = {
-	.gain             = ADC_GAIN,
-	.reference        = ADC_REFERENCE,
-	.acquisition_time = ADC_ACQUISITION_TIME,
-	.channel_id       = ADC_2ND_CHANNEL_ID,
-#if defined(CONFIG_ADC_CONFIGURABLE_INPUTS)
-	.input_positive   = ADC_2ND_CHANNEL_INPUT,
-#endif
-};
-#endif /* defined(ADC_2ND_CHANNEL_ID) */
-
-
-static struct device *init_adc(void)
-{
-	int ret;
-	struct device *adc_dev = device_get_binding(ADC_DEVICE_NAME);
-
-	if (!adc_dev) {
-		printf("Cannot get ADC device");
-		return;
-	}
-
-	ret = adc_channel_setup(adc_dev, &m_1st_channel_cfg);
-	if (ret) {
-		printf("Setting up of the first channel failed with code %d", ret);
-	}
-
-#if defined(ADC_2ND_CHANNEL_ID)
-	ret = adc_channel_setup(adc_dev, &m_2nd_channel_cfg);
-	if (ret) {
-		printf("Setting up of the second channel failed with code %d", ret);
-	}
-#endif /* defined(ADC_2ND_CHANNEL_ID) */
-
-	(void)memset(m_sample_buffer, 0, sizeof(m_sample_buffer));
-
-	return adc_dev;
-}
-
-
-int sample_sensor (int channel_id)
-{
-	int ret;
-
-	const struct adc_sequence sequence = {
-		.channels    = BIT(channel_id),
-		.buffer      = m_sample_buffer,
-		.buffer_size = sizeof(m_sample_buffer),
-		.resolution  = ADC_RESOLUTION,
-	};
-
-	struct device *adc_dev = init_adc();
-
-	if (!adc_dev) {
-		printf("Failed to initialise ADC");
-		return -1;
-	}
-
-	ret = adc_read(adc_dev, &sequence);
-
-	if (ret) {
-		printf("Failed to read ADC with code %d", ret);
-	}
-
-	return m_sample_buffer[0];
-}
-
-//==========================================================================
-
-
-void turn_clockwise (struct device *pwm_dev){
-		u32_t pulse_width = PERIOD;
-		if (pwm_pin_set_usec(pwm_dev, YOUR_PIN, PERIOD, pulse_width)) {
-			printk("pwm pin set fails\n");
-			return;
-		}
-		pulse_width -=200;
-		k_sleep(90);
-		if (pwm_pin_set_usec(pwm_dev, YOUR_PIN, PERIOD, pulse_width)) {
-			printk("pwm pin set fails\n");
-			return;
-		}
-		pulse_width = -200;
-		k_sleep(90);
-		if (pwm_pin_set_usec(pwm_dev, YOUR_PIN, PERIOD, pulse_width)) {
-			printk("pwm pin set fails\n");
-			return;
-		}
-}
-
-void turn_anticlockwise (struct device *pwm_dev){
-		u32_t pulse_width = 0;
-		if (pwm_pin_set_usec(pwm_dev, YOUR_PIN, PERIOD, pulse_width)) {
-			printk("pwm pin set fails\n");
-			return;
-		}
-		pulse_width +=200;
-		k_sleep(90);
-		if (pwm_pin_set_usec(pwm_dev, YOUR_PIN, PERIOD, pulse_width)) {
-			printk("pwm pin set fails\n");
-			return;
-		}
-		pulse_width += 200;
-		k_sleep(90);
-		if (pwm_pin_set_usec(pwm_dev, YOUR_PIN, PERIOD, pulse_width)) {
-			printk("pwm pin set fails\n");
-			return;
-		}
-}
-
-void fill_up(struct device *pwm_dev, int sample){
-	while(sample < 100){
-		turn_clockwise(pwm_dev);
-		pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
-		k_sleep(MSEC_PER_SEC);
-		turn_anticlockwise(pwm_dev);
-		pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
-		sample = sample + 25;
-		k_sleep(MSEC_PER_SEC);
-	}
-}
-
-//given the current time, calculate the length of time until the next feeding time.
-//next feeding time must be the next 
-u32_t get_time_to(u32_t start_time, u32_t end_time)
-{
-    u32_t time_diff_in_mins = 0;
-    u32_t start_min = start_time % 100;
-    u32_t start_hour = start_time / 100;
-    u32_t end_min = end_time % 100;
-    u32_t end_hour = end_time / 100;
-
-    if (end_time < start_time)
-    {
-        end_hour += 12;
-        time_diff_in_mins += 12*60;
-    }
-    if (end_min > start_min)
-    {
-        time_diff_in_mins += end_min - start_min;
-        time_diff_in_mins += 60*(end_hour - start_hour); 
-    }
-    else
-    {
-        time_diff_in_mins += 60 - start_min + end_min;
-        start_hour += 1;
-        time_diff_in_mins += 60*(end_hour - start_hour);
-    }
-    
-    
-    return time_diff_in_mins * 60000;
-}
-
-int sampling()
-{
-	int sample;
-	int bowlFill;
-	for(int i = 0; i < 4; i++){
-		k_sleep(500);
-		printk("\nSampling ... ");
-
-		sample = sample_sensor(ADC_1ST_CHANNEL_ID);
-
-		if(sample < 200){
-			printf("Bowl is emptyish");
-			bowlFill = 0;
-		} else if(sample >= 200 && sample <= 370){
-			printf("Bowl is 1/4 fullish");
-			bowlFill = 25;
-		} else if(sample > 370 && sample <= 500){
-			printf("Bowl is 1/2 fullish");
-			bowlFill = 50;
-		} else if(sample > 500 && sample <= 580){
-			printf("Bowl is 3/4 fullish");
-			bowlFill = 75;
-		} else{
-			printf("Bowl is fullish");
-			bowlFill = 100;
-		}
-
-		printk("%d \n", sample);
-	}
-	return bowlFill;
-}
-
 
 
 void main(void)
@@ -267,9 +66,9 @@ void main(void)
 
 
 	while (true) {
-
-
-		
+		k_sleep(500);
+		int b = sample_sensor(ADC_1ST_CHANNEL_ID);
+		printf("%d \n", b);
 
 		/* compute how long the work took (also updates the time stamp) */
 		milliseconds_spent = k_uptime_get_32();
