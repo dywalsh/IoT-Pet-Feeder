@@ -1,7 +1,7 @@
 // Customize for your thingsboard instance
 var TB_ADDRESS = "192.168.137.226"
 var TB_PORT = 8080
-var INTERVAL = 100
+var INTERVAL = 10000
 //
 // You need to replace `token` below with a JWT_TOKEN obtained from your
 // thingsboard instance. Follow the instructions at the URL below, specifically
@@ -66,7 +66,7 @@ function sendTime(deviceId, time) {
 
 function sendTimeToDevices() {
   console.log('Sending time to devices...');
-  var time = Date.now();
+  var time = Math.round((new Date()).getTime() / 1000);
 
   DEVICE_IDS.forEach(function(deviceId){
   	sendTime(deviceId, time);
@@ -74,4 +74,4 @@ function sendTimeToDevices() {
 
 }
 
-setTimeout(sendTimeToDevices, INTERVAL);
+setInterval(sendTimeToDevices, INTERVAL);
