@@ -10,3 +10,5 @@ rpc_handler/cmake-build-debug/CMakeFiles/
 rpc_handler/cmake-build-debug/CMakeCache\.txt
 
 *.user
+
+rpc_handler/dashes/device_dash_custom\.json
