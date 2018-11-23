@@ -116,6 +116,50 @@ void handle_fillUpFood(char *json, int json_len)
 	putLights(3, true);
 }
 
+void handle_updateSchedule(char *json, int json_len)
+{
+	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
+/*	char* tempString = malloc(4);
+	memcpy(tempString, &json[25], 4);
+	tempString[4] = '\0';*/
+
+	char payload[64];
+
+	//ts = time schedule
+    char ts1[5];
+	char ts2[5];
+    char ts3[5];
+	for(int i = 0; i<4; i++)
+	{
+		ts1[i] = json[i+37];
+	}
+			ts1[4] = '\0';
+
+	for(int j = 0; j<4; j++)
+	{
+		ts2[j] = json[j+42];
+	}
+			ts2[4] = '\0';
+
+	for (int k = 0; k<4; k++)
+	{
+		ts3[k] = json[k+47];
+	}
+			ts3[4] = '\0';
+
+			int num1 = atoi(ts1);
+			int num2 = atoi(ts2);
+			int num3 = atoi(ts3);
+
+
+	snprintf(payload, sizeof(payload), "{\"st1\":\"%s\", \"st2\":\"%s\", \"st3\":\"%s\"}", ts1, ts2, ts3);
+
+		printf("test: %d\n %d\n %d", num1,num2,num3);
+
+
+	tb_publish_telemetry(payload);
+
+}
 
 /*
  * Process an RPC request received from the thingsboard instance
@@ -139,6 +183,9 @@ void handle_rpc(char *json, int json_len)
 	}
 	else if ( strncmp(&json[11], "fillUpFood", strlen("fillUpFood")) == 0 ) {
 		handle_fillUpFood(json, json_len);
+	}
+		else if(strncmp(&json[11], "updateSchedule", strlen("updateSchedule")) == 0){
+			handle_updateSchedule(json, json_len);
 	}
 }
 
