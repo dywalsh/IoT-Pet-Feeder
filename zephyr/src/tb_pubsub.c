@@ -126,7 +126,7 @@ void handle_updateSchedule(char *json, int json_len)
 }
 
 void send_weightTelemetry(int weight){
-	char payload[16];
+	char payload[32];
 	snprintf(payload, sizeof(payload), "{\"weight\":\"%d\"}", weight);
 	printf("weight: %d\n", weight);
 	tb_publish_telemetry(payload);

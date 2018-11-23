@@ -123,8 +123,7 @@ void main(void)
 		currentWeight = sampling();
 		send_weightTelemetry(currentWeight);
 		printf("Current weight: %d\n", currentWeight);
-
-
+		fill_up(currentWeight);
 		update_attributes();
 	}
 }
