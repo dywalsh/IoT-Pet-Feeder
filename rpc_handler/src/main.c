@@ -25,6 +25,8 @@
 #include "sensors.h"
 #include "lights.h"
 #include "config.h"
+#include "time.h"
+
 
 #define ATTR_UPDATE_INTERVAL 15000
 
@@ -114,6 +116,9 @@ void main(void)
 	while (true) {
 		k_sleep(ATTR_UPDATE_INTERVAL);
 		printf("Updating attributes\n");
+		if (hasTime()) {
+			printf("Current unix time: %d\n", getTime());			
+		}
 		update_attributes();
 	}
 }
