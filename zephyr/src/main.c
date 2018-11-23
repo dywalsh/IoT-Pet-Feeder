@@ -102,6 +102,7 @@ static int network_setup(void)
 void main(void)
 {
 	int rc;
+	int currentWeight = 0;
 
 	rc = network_setup();
 	PRINT_RESULT("network_setup", rc);
@@ -118,8 +119,12 @@ void main(void)
 		printf("Updating attributes\n");
 		if (hasTime()) {
 			printf("Current unix time: %d\n", getTime());
-
 		}
+		currentWeight = sampling();
+		send_weightTelemetry(currentWeight);
+		printf("Current weight: %d\n", currentWeight);
+
+
 		update_attributes();
 	}
 }

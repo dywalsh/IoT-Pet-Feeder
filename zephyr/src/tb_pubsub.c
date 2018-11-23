@@ -121,12 +121,15 @@ void handle_updateSchedule(char *json, int json_len)
 
 
 	snprintf(payload, sizeof(payload), "{\"st1\":\"%s\", \"st2\":\"%s\", \"st3\":\"%s\"}", ts1, ts2, ts3);
-
-		printf("test: %d\n %d\n %d", num1,num2,num3);
-
-
+	printf("test: %d\n %d\n %d", num1,num2,num3);
 	tb_publish_telemetry(payload);
+}
 
+void send_weightTelemetry(int weight){
+	char payload[16];
+	snprintf(payload, sizeof(payload), "{\"weight\":\"%d\"}", weight);
+	printf("weight: %d\n", weight);
+	tb_publish_telemetry(payload);
 }
 
 /*
@@ -139,6 +142,9 @@ void handle_rpc(char *json, int json_len)
 	}
 	else if ( strncmp(&json[11], "time", strlen("time")) == 0 ) {
 		handle_setTime(json, json_len);
+	} 
+	else if ( strncmp(&json[11], "updateSchedule", strlen("updateSchedule")) == 0 ) {
+		handle_updateSchedule(json, json_len);
 	} 
 }
 
