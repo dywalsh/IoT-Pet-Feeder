@@ -11,6 +11,7 @@
 
 #include <zephyr.h>
 #include <net/mqtt.h>
+#include <stdlib.h>
 
 #include <misc/printk.h>
 #include <string.h>
@@ -22,6 +23,7 @@
 #include "lights.h"
 
 #include "config.h"
+#include "time.h"
 
 #define MAX_PENDING_PUB_MSGS 8
 #define PUBSUB_STACK_SIZE 1024
@@ -120,6 +122,10 @@ void handle_fillUpFood(char *json, int json_len)
 void handle_setTime(char *json, int json_len)
 {
 	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
+	char timeChars[14];
+	memcpy(timeChars, &json[26], 14);
+	int time = atoi(timeChars);
+	setTime(time);
 }
 
 
