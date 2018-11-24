@@ -33,6 +33,11 @@ static const char *TB_TELEMETRY_TOPIC = "v1/devices/me/telemetry";
 static const char *TB_RPC_TOPIC[] = {"v1/devices/me/rpc/request/+"};
 static const enum mqtt_qos TB_RPC_QOS[] = {MQTT_QoS0};
 
+int const timeAdd = 10000;
+int schedule1 = 1;
+int schedule2 = 1;
+int schedule3 = 1;
+
 /* For some reason thingsboard.io is very slow to respond to TX Connect
  * requests. We'll implement them using an alert to signal when
  * a connection is established. */
@@ -64,6 +69,17 @@ static struct pub_msg {
 	struct mqtt_publish_msg mqtt_publish_msg;
 };
 
+struct rpc_schedule {
+	const char* method;
+	struct rpc_schedule_params {
+		int time;
+		int s1;
+		int s2;
+		int s3;
+	} params;
+};
+
+
 /* Message Queue and Memory Pool for publish message descriptors and
  * associated JSON payload */
 K_MSGQ_DEFINE(msgq, sizeof(struct pub_msg), MAX_PENDING_PUB_MSGS, 4);
@@ -78,12 +94,71 @@ void handle_fillUpFood(char *json, int json_len)
 void handle_setTime(char *json, int json_len)
 {
 	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
-	char timeChars[14];
-	memcpy(timeChars, &json[26], 14);
-	int time = atoi(timeChars);
-	setTime(time);
-	fill_up(50);
+
+		/* JSON RPC params for putLights */
+	static const struct json_obj_descr rpc_descr_params[] = {
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule_params, time, JSON_TOK_NUMBER),
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule_params, s1, JSON_TOK_NUMBER),
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule_params, s2, JSON_TOK_NUMBER),
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule_params, s3, JSON_TOK_NUMBER),
+	};
+
+
+/* JSON generic thingsboard.iharacter string pointed to by buf to values which are stored in the tm structure pointed to by tm, using the format specified by format.o RPC */
+	static const struct json_obj_descr rpc_descr[] = {
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule, method, JSON_TOK_STRING),
+		JSON_OBJ_DESCR_OBJECT(struct rpc_schedule, params, rpc_descr_params)
+	};
+
+
+	struct rpc_schedule rx_rpc={};
+	json_obj_parse(json, json_len, rpc_descr, ARRAY_SIZE(rpc_descr), &rx_rpc);
+
+		printf("[%s:%d] parsed method: %s, params: unixTime: %d  s1:%d  s2: %d  s3: %d",
+		__func__, __LINE__, rx_rpc.method, rx_rpc.params.time, rx_rpc.params.s1, rx_rpc.params.s2, rx_rpc.params.s3);
+
+		schedule1 = rx_rpc.params.s1;
+		schedule2 = rx_rpc.params.s2;
+		schedule3 = rx_rpc.params.s3;
+	printf("schedule times: %d\n %d\n %d\n", schedule1,schedule2,schedule3);
+
+
+	setTime(rx_rpc.params.time);
+	int currentTime = getTime();
+	check_schedule(currentTime, schedule1, schedule2, schedule3);
+	//fill_up(50);
 }
+
+int get_minutes(int time){
+	return time%100;
+}
+
+int get_hour(int time){
+	return time/100;
+}
+
+void check_schedule(int currentTime, int ts1, int ts2, int ts3){
+	int sec_of_day = currentTime % (24 * 60 * 60);
+	int hour = sec_of_day / (60 * 60);
+	int minute = sec_of_day % (60 * 60) / 60;
+
+	int ts1Minutes = get_minutes(ts1);
+	int ts1Hours = get_hour(ts1);
+
+	int ts2Minutes = get_minutes(ts2);
+	int ts2Hours = get_hour(ts2);
+
+	int ts3Minutes = get_minutes(ts3);
+	int ts3Hours = get_hour(ts3);
+
+	printf("sec of day = %d\n current minute = %d\n current hour = %d\n", sec_of_day, minute, hour);
+	printf("TS1 minute = %d\n TS1 hour = %d\n TS2 minute = %d\n TS2 hour = %d\n TS3 minute = %d\n TS3 hour = %d\n", ts1Minutes, ts1Hours, ts2Minutes, ts2Hours, ts3Minutes, ts3Hours);
+	if((hour == ts1Hours && minute == ts1Minutes) || (hour == ts2Hours && minute == ts2Minutes) || (hour == ts3Hours && minute == ts3Minutes)){
+		printf("SCHEDULE HIT!!!!!!!\n");
+	}
+}
+
+
 void handle_updateSchedule(char *json, int json_len)
 {
 	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
@@ -115,20 +190,20 @@ void handle_updateSchedule(char *json, int json_len)
 	}
 			ts3[4] = '\0';
 
-			int num1 = atoi(ts1);
-			int num2 = atoi(ts2);
-			int num3 = atoi(ts3);
+	schedule1 = atoi(ts1);
+	schedule2 = atoi(ts2);
+	schedule3 = atoi(ts3);
 
 
 	snprintf(payload, sizeof(payload), "{\"st1\":\"%s\", \"st2\":\"%s\", \"st3\":\"%s\"}", ts1, ts2, ts3);
-	printf("test: %d\n %d\n %d", num1,num2,num3);
+	printf("test: %d\n %d\n %d", schedule1,schedule2,schedule3);
 	tb_publish_telemetry(payload);
 }
 
 void send_weightTelemetry(int weight){
 	char payload[32];
 	snprintf(payload, sizeof(payload), "{\"weight\":\"%d\"}", weight);
-	printf("weight: %d\n", weight);
+//	printf("weight: %d\n", weight);
 	tb_publish_telemetry(payload);
 }
 
@@ -141,6 +216,7 @@ void handle_rpc(char *json, int json_len)
 		handle_fillUpFood(json, json_len);
 	}
 	else if ( strncmp(&json[11], "time", strlen("time")) == 0 ) {
+		printf("test");
 		handle_setTime(json, json_len);
 	} 
 	else if ( strncmp(&json[11], "updateSchedule", strlen("updateSchedule")) == 0 ) {
