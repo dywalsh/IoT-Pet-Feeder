@@ -28,7 +28,7 @@
 #include "servo.h"
 
 
-#define ATTR_UPDATE_INTERVAL 15000
+#define ATTR_UPDATE_INTERVAL 5000
 
 #define RC_STR(rc)	((rc) == 0 ? "OK" : "ERROR")
 #define PRINT_RESULT(func, rc)	\
