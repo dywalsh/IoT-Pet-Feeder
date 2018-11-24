@@ -36,7 +36,10 @@ function sendTime(deviceId, time) {
     // The JSON RPC description must match that expected in tb_pubsub.c
     var req = {
         "method" : "time",
-        "params" : time
+        "params" : {
+            "time" : time,
+            "schedule" : ["12:00", "08:00", "18:00"]
+        }
     };
 
     console.log("RPC Request: " + url + ": " + JSON.stringify(req));
