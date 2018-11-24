@@ -109,16 +109,16 @@ int sampling()
 
 		sample = sample_sensor(ADC_1ST_CHANNEL_ID);
 
-		if(sample < 200){
+		if(sample < 170){
 			printf("Bowl is emptyish");
 			bowlFill = 0;
-		} else if(sample >= 200 && sample <= 370){
+		} else if(sample >= 170 && sample < 430){
 			printf("Bowl is 1/4 fullish");
 			bowlFill = 25;
-		} else if(sample > 370 && sample <= 500){
+		} else if(sample >= 430 && sample < 570){
 			printf("Bowl is 1/2 fullish");
 			bowlFill = 50;
-		} else if(sample > 500 && sample <= 580){
+		} else if(sample >= 570 && sample < 670){
 			printf("Bowl is 3/4 fullish");
 			bowlFill = 75;
 		} else{
