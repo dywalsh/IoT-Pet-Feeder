@@ -38,7 +38,9 @@ function sendTime(deviceId, time) {
         "method" : "time",
         "params" : {
             "time" : time,
-            "schedule" : ["12:00", "08:00", "18:00"]
+            "schedule1" : 1200,
+            "schedule2" : 1400,
+            "schedule3" : 1800
         }
     };
 

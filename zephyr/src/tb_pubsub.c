@@ -64,6 +64,17 @@ static struct pub_msg {
 	struct mqtt_publish_msg mqtt_publish_msg;
 };
 
+struct rpc_schedule {
+	const char* method;
+	struct rpc_schedule_params {
+		int time;
+		int schedule1;
+		int schedule2;
+		int schedule3;
+	} params;
+};
+
+
 /* Message Queue and Memory Pool for publish message descriptors and
  * associated JSON payload */
 K_MSGQ_DEFINE(msgq, sizeof(struct pub_msg), MAX_PENDING_PUB_MSGS, 4);
@@ -78,11 +89,36 @@ void handle_fillUpFood(char *json, int json_len)
 void handle_setTime(char *json, int json_len)
 {
 	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
-	char timeChars[14];
+
+
+		/* JSON RPC params for putLights */
+	static const struct json_obj_descr rpc_descr_params[] = {
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule_params, time, JSON_TOK_NUMBER),
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule_params, schedule1, JSON_TOK_NUMBER),
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule_params, schedule2, JSON_TOK_NUMBER),
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule_params, schedule3, JSON_TOK_NUMBER),
+	};
+
+
+		/* JSON generic thingsboard.io RPC */
+	static const struct json_obj_descr rpc_descr[] = {
+		JSON_OBJ_DESCR_PRIM(struct rpc_schedule, method, JSON_TOK_STRING),
+		JSON_OBJ_DESCR_OBJECT(struct rpc_schedule, params, rpc_descr_params)
+	};
+
+
+	struct rpc_schedule rx_rpc={};
+	json_obj_parse(json, json_len, rpc_descr, ARRAY_SIZE(rpc_descr), &rx_rpc);
+
+		printf("[%s:%d] parsed method: %s, params: unixTime: %d  schedule1:%d  schedule2: %d  schedule3: %d",
+		__func__, __LINE__, rx_rpc.method, rx_rpc.params.time, rx_rpc.params.schedule1, rx_rpc.params.schedule2, rx_rpc.params.schedule3);
+
+
+	/*char timeChars[14];
 	memcpy(timeChars, &json[26], 14);
 	int time = atoi(timeChars);
 	setTime(time);
-	fill_up(50);
+	fill_up(50);*/
 }
 void handle_updateSchedule(char *json, int json_len)
 {
