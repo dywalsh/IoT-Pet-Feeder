@@ -10,7 +10,7 @@ var INTERVAL = 10000
 //
 //   https://thingsboard.io/docs/reference/rest-api/
 //
-var TB_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2dWh1QHRjZC5pZSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiMjlkNWRmMTAtZTI4NS0xMWU4LWEwYjUtMDFjMGJmMDNhNWI4IiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJ0ZW5hbnRJZCI6IjBmNTI0ZGUwLWUyODUtMTFlOC1hMGI1LTAxYzBiZjAzYTViOCIsImN1c3RvbWVySWQiOiIxMzgxNDAwMC0xZGQyLTExYjItODA4MC04MDgwODA4MDgwODAiLCJpc3MiOiJ0aGluZ3Nib2FyZC5pbyIsImlhdCI6MTU0MzAwMDA0NywiZXhwIjoxNTUyMDAwMDQ3fQ.td1aQMn1Z4M8PR7JKJtR0FtocImX22FacmlCjdYPyadtEmx0EdEqJTFEwZBZvJcAQkiki0HUOsoFzq0m9C7IPw";
+var TB_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2dWh1QHRjZC5pZSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiMjlkNWRmMTAtZTI4NS0xMWU4LWEwYjUtMDFjMGJmMDNhNWI4IiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJ0ZW5hbnRJZCI6IjBmNTI0ZGUwLWUyODUtMTFlOC1hMGI1LTAxYzBiZjAzYTViOCIsImN1c3RvbWVySWQiOiIxMzgxNDAwMC0xZGQyLTExYjItODA4MC04MDgwODA4MDgwODAiLCJpc3MiOiJ0aGluZ3Nib2FyZC5pbyIsImlhdCI6MTU0MzA3NDg2OCwiZXhwIjoxNTUyMDc0ODY4fQ.i6lkU0zTIUvIDsKvbr-0EHEmhLsiGBNHzkRcvucOC2bxC_JonnzIHxDu_OHO3JSdGpiBkKQgKb7amUQHVkvKUA";
 
 // Create an array of thingsboard DEVICE IDs corresponding to your nRF52-DKs
 // You can obtain these using COPY DEVICE ID in the thingsboard web UI
@@ -38,9 +38,9 @@ function sendTime(deviceId, time) {
         "method" : "time",
         "params" : {
             "time" : time,
-            "schedule1" : 1200,
-            "schedule2" : 1400,
-            "schedule3" : 1800
+            "s1" : 0932,
+            "s2" : 1456,
+            "s3" : 1942
         }
     };
 
@@ -67,7 +67,6 @@ function sendTime(deviceId, time) {
         }
     });
 }
-
 
 function sendTimeToDevices() {
   console.log('Sending time to devices...');

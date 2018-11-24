@@ -120,10 +120,16 @@ void main(void)
 		if (hasTime()) {
 			printf("Current unix time: %d\n", getTime());
 		}
-		currentWeight = sampling();
-		send_weightTelemetry(currentWeight);
-		printf("Current weight: %d\n", currentWeight);
-		fill_up(currentWeight);
+		printf("TESTING GLOBAL VARIABLE 1 %d\n", schedule1);
+		printf("TESTING GLOBAL VARIABLE 2 %d\n", schedule2);
+		printf("TESTING GLOBAL VARIABLE 3 %d\n", schedule3);
+		int currentTime = getTime();
+		check_schedule(currentTime, schedule1, schedule2, schedule3);
+		//currentWeight = sampling();
+		//send_weightTelemetry(currentWeight);
+
+		//printf("Current weight: %d\n", currentWeight);
+		//fill_up(currentWeight);
 		update_attributes();
 	}
 }

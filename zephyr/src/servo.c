@@ -8,6 +8,7 @@
 #include <pwm.h>
 #include <gpio.h>
 #include "config.h"
+#include "fsr.h"
 
 #define YOUR_PIN	NRF_GPIO_PIN_MAP(0,22)
 
@@ -68,8 +69,8 @@ void fill_up(int sample){
 		k_sleep(MSEC_PER_SEC);
 		turn_anticlockwise(servo);
 		pwm_pin_set_usec(servo, YOUR_PIN, 0, 0);
-		sample = sample + 25;
-		k_sleep(MSEC_PER_SEC);
+		sample = sampling();
+		//k_sleep(MSEC_PER_SEC);
 	}
 }
 
