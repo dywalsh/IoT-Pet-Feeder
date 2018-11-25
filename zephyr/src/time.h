@@ -19,7 +19,8 @@ int get_minutes(int time);
 
 int get_hour(int time);
 
+bool is_on_schedule();
 
-void check_schedule(int currentTime, int ts1, int ts2, int ts3);
+void set_schedules(int schedule1, int schedule2, int schedule3);
 
 #endif

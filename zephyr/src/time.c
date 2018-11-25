@@ -44,23 +44,31 @@ int get_hour(int time){
 	return time/100;
 }
 
-void check_schedule(int currentTime, int ts1, int ts2, int ts3){
-	int sec_of_day = currentTime % (24 * 60 * 60);
+bool is_on_schedule()
+{
+	return check_schedule(schedule1) || check_schedule(schedule2) || check_schedule(schedule3);
+}
+
+void set_schedules(int ts1, int ts2, int ts3)
+{
+	schedule1 = ts1;
+	schedule2 = ts2;
+	schedule3 = ts3;
+}
+
+
+bool check_schedule(int schedule){
+	int sec_of_day =  getTime() % (24 * 60 * 60);
 	int hour = sec_of_day / (60 * 60);
 	int minute = sec_of_day % (60 * 60) / 60;
 
-	int ts1Minutes = get_minutes(ts1);
-	int ts1Hours = get_hour(ts1);
+	int scheduleMinutes = get_minutes(schedule);
+	int scheduleHours = get_hour(schedule);
 
-	int ts2Minutes = get_minutes(ts2);
-	int ts2Hours = get_hour(ts2);
-
-	int ts3Minutes = get_minutes(ts3);
-	int ts3Hours = get_hour(ts3);
-
-	printf("sec of day = %d\n current minute = %d\n current hour = %d\n", sec_of_day, minute, hour);
-	printf("TS1 minute = %d\n TS1 hour = %d\n TS2 minute = %d\n TS2 hour = %d\n TS3 minute = %d\n TS3 hour = %d\n", ts1Minutes, ts1Hours, ts2Minutes, ts2Hours, ts3Minutes, ts3Hours);
-	if((hour == ts1Hours && minute == ts1Minutes) || (hour == ts2Hours && minute == ts2Minutes) || (hour == ts3Hours && minute == ts3Minutes)){
-		printf("SCHEDULE HIT!!!!!!!\n");
+	if(hour == scheduleHours && minute == scheduleMinutes){
+		printf("SCHEDULE HIT!\n");
+		return true;
 	}
+
+	return false;
 }
