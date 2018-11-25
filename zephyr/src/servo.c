@@ -62,7 +62,6 @@ void turn_anticlockwise (){
 }
 
 void fill_up(int sample){
-	printf("fill me up");
 	while(sample < 100){
 		turn_clockwise(servo);
 		pwm_pin_set_usec(servo, YOUR_PIN, 0, 0);
@@ -107,7 +106,5 @@ u32_t get_time_to(u32_t start_time, u32_t end_time)
 
 void setup_servo(struct device *servo_in)
 {
-	printf("Setup servo");
-	/* Hardcoded because imports are being weird*/
 	servo = servo_in;
 }
