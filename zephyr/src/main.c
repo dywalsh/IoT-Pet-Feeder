@@ -102,7 +102,6 @@ static int network_setup(void)
 void main(void)
 {
 	int rc;
-	int currentWeight = 0;
 
 	rc = network_setup();
 	PRINT_RESULT("network_setup", rc);
@@ -110,26 +109,19 @@ void main(void)
 		return;
 	}
 
-
 	setup_servo(device_get_binding(PWM_DRIVER));
 	tb_pubsub_start();
 
 	while (true) {
 		k_sleep(ATTR_UPDATE_INTERVAL);
-		printf("Updating attributes\n");
-		if (hasTime()) {
-			printf("Current unix time: %d\n", getTime());
+		int currentWeight = sample_weight();
+		if (check_schedule(schedule1) || check_schedule(schedule2) || check_schedule(schedule3)) {
+			maybe_fill_up(currentWeight);
 		}
-		printf("TESTING GLOBAL VARIABLE 1 %d\n", schedule1);
-		printf("TESTING GLOBAL VARIABLE 2 %d\n", schedule2);
-		printf("TESTING GLOBAL VARIABLE 3 %d\n", schedule3);
-		int currentTime = getTime();
-		check_schedule(currentTime, schedule1, schedule2, schedule3);
-		//currentWeight = sampling();
-		//send_weightTelemetry(currentWeight);
+		
+		send_weightTelemetry(currentWeight);
 
 		//printf("Current weight: %d\n", currentWeight);
-		//fill_up(currentWeight);
 		update_attributes();
 	}
 }

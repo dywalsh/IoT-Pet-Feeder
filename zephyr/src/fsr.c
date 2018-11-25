@@ -74,16 +74,14 @@ static struct device *init_adc(void)
 
 int sample_sensor (int channel_id)
 {
-	int ret;
-
 	const struct adc_sequence sequence = {
 		.channels    = BIT(channel_id),
 		.buffer      = m_sample_buffer,
 		.buffer_size = sizeof(m_sample_buffer),
 		.resolution  = ADC_RESOLUTION,
 	};
-
-	struct device *adc_dev = init_adc();
+	struct device *adc_dev = init_adc();	
+	int ret;
 
 	if (!adc_dev) {
 		printf("Failed to initialise ADC");
@@ -93,36 +91,37 @@ int sample_sensor (int channel_id)
 	ret = adc_read(adc_dev, &sequence);
 
 	if (ret) {
-		printf("Failed to read ADC with code %d", ret);
+		printf("Failed to read ADC with code %d\n", ret);
+		return -1;
 	}
 
 	return m_sample_buffer[0];
 }
 
-int sampling()
+int sample_weight()
 {
 	int sample;
 	int bowlFill;
 	for(int i = 0; i < 4; i++){
 		k_sleep(500);
-		printk("\nSampling ... ");
+		printk("Sampling force sensor...\n");
 
 		sample = sample_sensor(ADC_1ST_CHANNEL_ID);
 
 		if(sample < 200){
-			printf("Bowl is emptyish");
+			printf("Bowl is emptyish\n");
 			bowlFill = 0;
 		} else if(sample >= 200 && sample <= 370){
-			printf("Bowl is 1/4 fullish");
+			printf("Bowl is 1/4 fullish\n");
 			bowlFill = 25;
 		} else if(sample > 370 && sample <= 500){
-			printf("Bowl is 1/2 fullish");
+			printf("Bowl is 1/2 fullish\n");
 			bowlFill = 50;
 		} else if(sample > 500 && sample <= 580){
-			printf("Bowl is 3/4 fullish");
+			printf("Bowl is 3/4 fullish\n");
 			bowlFill = 75;
 		} else{
-			printf("Bowl is fullish");
+			printf("Bowl is fullish\n");
 			bowlFill = 100;
 		}
 
