@@ -4,11 +4,14 @@
 
 #include <zephyr.h>
 
+#define SCHEDULE_WINDOW MSEC_PER_SEC
 
 int time_unix;
 int time_stored_at = 0;
-int last_fed = 0;
-
+int last_schedule_activation = 0; //Unix time of last scheudle activation
+int schedule1;
+int schedule2;
+int schedule3;
 
 void setTime(int time)
 {
@@ -19,11 +22,7 @@ void setTime(int time)
 int getTime()
 {
 	int current_up_time = (uint32_t)k_uptime_get_32() / 1000;
-	printf("Current up time = %d\n", current_up_time);
 	int diff_time = current_up_time - time_stored_at;
-	printf("Diff time = %d\n", diff_time);
-	printf("time unix = %d\n", time_unix);
-	printf("time unix + diff time = %d\n", (time_unix+diff_time));
 	return time_unix + diff_time;
 }
 
@@ -44,16 +43,13 @@ int get_hour(int time){
 	return time/100;
 }
 
-bool is_on_schedule()
+bool recently_ran()
 {
-	return check_schedule(schedule1) || check_schedule(schedule2) || check_schedule(schedule3);
-}
+	if (getTime() - last_schedule_activation <= SCHEDULE_WINDOW) {
+		return true;
+	}
 
-void set_schedules(int ts1, int ts2, int ts3)
-{
-	schedule1 = ts1;
-	schedule2 = ts2;
-	schedule3 = ts3;
+	return false;
 }
 
 
@@ -71,4 +67,26 @@ bool check_schedule(int schedule){
 	}
 
 	return false;
+}
+
+// Checks the schedule, updates last activation time if in schedule
+bool is_on_schedule()
+{
+	if (recently_ran()) {
+		return false;
+	}
+
+	if (check_schedule(schedule1) || check_schedule(schedule2) || check_schedule(schedule3)) {
+		last_schedule_activation = getTime();
+		return true;
+	}
+
+	return false;
+}
+
+void set_schedules(int ts1, int ts2, int ts3)
+{
+	schedule1 = ts1;
+	schedule2 = ts2;
+	schedule3 = ts3;
 }

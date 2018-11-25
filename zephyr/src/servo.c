@@ -63,16 +63,6 @@ void turn_anticlockwise ()
 	}
 }
 
-//Fills the bowl up
-void maybe_fill_up(int sample)
-{
-	sample = sample_weight();
-	while(sample < 100){
-		dispence_quarter();
-		sample = sample_weight();
-	}
-}
-
 void dispense_quarter()
 {
 	turn_clockwise(servo);
@@ -80,6 +70,17 @@ void dispense_quarter()
 	k_sleep(MSEC_PER_SEC);
 	turn_anticlockwise(servo);
 	pwm_pin_set_usec(servo, SERVO_PIN, 0, 0);
+}
+
+
+//Fills the bowl up to max if not full
+void maybe_fill_up(int sample)
+{
+	sample = sample_weight();
+	while(sample < 100){
+		dispense_quarter();
+		sample = sample_weight();
+	}
 }
 
 void setup_servo(struct device *servo_in)

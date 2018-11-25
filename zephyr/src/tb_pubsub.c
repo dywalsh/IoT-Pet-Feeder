@@ -118,12 +118,8 @@ void handle_setTime(char *json, int json_len)
 		schedule2 = rx_rpc.params.s2;
 		schedule3 = rx_rpc.params.s3;
 	printf("schedule times: %d\n %d\n %d\n", schedule1,schedule2,schedule3);
-
-
 	setTime(rx_rpc.params.time);
-	int currentTime = getTime();
-	check_schedule(currentTime, schedule1, schedule2, schedule3);
-	//maybe_fill_up(50);
+	set_schedules(schedule1, schedule2, schedule3);
 }
 
 

@@ -52,7 +52,6 @@ static struct device *init_adc(void)
 
 	if (!adc_dev) {
 		printf("Cannot get ADC device");
-		return;
 	}
 
 	ret = adc_channel_setup(adc_dev, &m_1st_channel_cfg);
