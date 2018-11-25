@@ -139,22 +139,18 @@ void handle_updateSchedule(char *json, int json_len)
 
 	//ts = time schedule
     char ts1[5];
-	char ts2[5];
+	char ts2[4];
     char ts3[5];
 	for(int i = 0; i<4; i++)
 	{
 		ts1[i] = json[i+37];
 	}
-			ts1[4] = '\0';
 
-	for(int j = 0; j<4; j++)
-	{
+	for(int j = 0; j<4; j++) {
 		ts2[j] = json[j+42];
 	}
-			ts2[4] = '\0';
 
-	for (int k = 0; k<4; k++)
-	{
+	for (int k = 0; k<4; k++) {
 		ts3[k] = json[k+47];
 	}
 			ts3[4] = '\0';
