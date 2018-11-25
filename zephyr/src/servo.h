@@ -4,7 +4,9 @@
 #include <device.h>
 
 extern struct device *servo;
-void fill_up(int sample);
 
 void setup_servo();
+void maybe_fill_up(int sample);
+void dispense_quarter();
+
 #endif
