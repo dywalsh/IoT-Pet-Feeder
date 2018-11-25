@@ -123,7 +123,7 @@ void handle_setTime(char *json, int json_len)
 	setTime(rx_rpc.params.time);
 	int currentTime = getTime();
 	check_schedule(currentTime, schedule1, schedule2, schedule3);
-	//fill_up(50);
+	//maybe_fill_up(50);
 }
 
 
@@ -131,18 +131,12 @@ void handle_setTime(char *json, int json_len)
 void handle_updateSchedule(char *json, int json_len)
 {
 	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
-/*	char* tempString = malloc(4);
-	memcpy(tempString, &json[25], 4);
-	tempString[4] = '\0';*/
-
 	char payload[64];
-
 	//ts = time schedule
-    char ts1[5];
+    char ts1[4];
 	char ts2[4];
-    char ts3[5];
-	for(int i = 0; i<4; i++)
-	{
+    char ts3[4];
+	for(int i = 0; i<4; i++) {
 		ts1[i] = json[i+37];
 	}
 
@@ -153,22 +147,26 @@ void handle_updateSchedule(char *json, int json_len)
 	for (int k = 0; k<4; k++) {
 		ts3[k] = json[k+47];
 	}
-			ts3[4] = '\0';
 
-	schedule1 = atoi(ts1);
-	schedule2 = atoi(ts2);
-	schedule3 = atoi(ts3);
-
+	set_schedules(atoi(ts1), atoi(ts2), atoi(ts3));
 
 	snprintf(payload, sizeof(payload), "{\"st1\":\"%s\", \"st2\":\"%s\", \"st3\":\"%s\"}", ts1, ts2, ts3);
 	printf("test: %d\n %d\n %d", schedule1,schedule2,schedule3);
 	tb_publish_telemetry(payload);
 }
 
-void send_weightTelemetry(int weight){
+//Disepnces food ignoring the current weight/schedule
+void handle_dispenseFood(char *json, int json_len)
+{
+	printf("Dispensing quarter\n");
+	dispense_quarter();
+}
+
+void send_weightTelemetry(int weight)
+{
 	char payload[32];
 	snprintf(payload, sizeof(payload), "{\"weight\":\"%d\"}", weight);
-//	printf("weight: %d\n", weight);
+	printf("weight: %d\n", weight);
 	tb_publish_telemetry(payload);
 }
 
@@ -186,6 +184,9 @@ void handle_rpc(char *json, int json_len)
 	} 
 	else if ( strncmp(&json[11], "updateSchedule", strlen("updateSchedule")) == 0 ) {
 		handle_updateSchedule(json, json_len);
+	}
+	else if ( strncmp(&json[11], "dispenseFood", strlen("dispenseFood")) == 0 ) {
+		handle_dispenseFood(json, json_len);
 	} 
 }
 
