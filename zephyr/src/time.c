@@ -45,10 +45,14 @@ int get_hour(int time){
 
 bool recently_ran()
 {
-	if (getTime() - last_schedule_activation <= SCHEDULE_WINDOW) {
+	int time = getTime();
+	printf("Recently ran %d %d %d\n", time, last_schedule_activation, SCHEDULE_WINDOW);
+
+	if (time - last_schedule_activation <= SCHEDULE_WINDOW) {
+		printf("Recently ran true");
 		return true;
 	}
-
+	printf("Recently ran false");
 	return false;
 }
 
@@ -62,7 +66,7 @@ bool check_schedule(int schedule){
 	int scheduleHours = get_hour(schedule);
 
 	if(hour == scheduleHours && minute == scheduleMinutes){
-		printf("SCHEDULE HIT!\n");
+		printf("SCHEDULE HIT! %d %d\n", scheduleHours, scheduleMinutes);
 		return true;
 	}
 
@@ -75,8 +79,9 @@ bool is_on_schedule()
 	if (recently_ran()) {
 		return false;
 	}
-
+	printf("schedule1: %d , schedule2 %d , schedule3 %d", schedule1, schedule2, schedule3);
 	if (check_schedule(schedule1) || check_schedule(schedule2) || check_schedule(schedule3)) {
+		printf("is on schedule true");
 		last_schedule_activation = getTime();
 		return true;
 	}

@@ -67,7 +67,7 @@ void dispense_quarter()
 {
 	turn_clockwise(servo);
 	pwm_pin_set_usec(servo, SERVO_PIN, 0, 0);
-	k_sleep(MSEC_PER_SEC);
+	k_sleep(MSEC_PER_SEC / 2);
 	turn_anticlockwise(servo);
 	pwm_pin_set_usec(servo, SERVO_PIN, 0, 0);
 }

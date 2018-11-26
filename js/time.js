@@ -1,5 +1,5 @@
 // Customize for your thingsboard instance
-var TB_ADDRESS = "127.0.0.1"
+var TB_ADDRESS = "192.168.137.228"
 var TB_PORT = 8080
 var INTERVAL = 10000
 //
@@ -10,12 +10,12 @@ var INTERVAL = 10000
 //
 //   https://thingsboard.io/docs/reference/rest-api/
 //
-var TB_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2dWh1QHRjZC5pZSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiMjlkNWRmMTAtZTI4NS0xMWU4LWEwYjUtMDFjMGJmMDNhNWI4IiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJ0ZW5hbnRJZCI6IjBmNTI0ZGUwLWUyODUtMTFlOC1hMGI1LTAxYzBiZjAzYTViOCIsImN1c3RvbWVySWQiOiIxMzgxNDAwMC0xZGQyLTExYjItODA4MC04MDgwODA4MDgwODAiLCJpc3MiOiJ0aGluZ3Nib2FyZC5pbyIsImlhdCI6MTU0MzA3NDg2OCwiZXhwIjoxNTUyMDc0ODY4fQ.i6lkU0zTIUvIDsKvbr-0EHEmhLsiGBNHzkRcvucOC2bxC_JonnzIHxDu_OHO3JSdGpiBkKQgKb7amUQHVkvKUA";
+var TB_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2UuaXMub2hhcmFAZ21haWwuY29tIiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiIyOGIwZGI1MC1lNGRiLTExZTgtOTEzYi0wZDNiMzY3YWY1N2MiLCJmaXJzdE5hbWUiOiJKb2UiLCJsYXN0TmFtZSI6Ik8nSGFyYSIsImVuYWJsZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiJkMDgyZGU3MC1lMWMzLTExZTgtYTM1MS05NzYwYjNhZDk0NjUiLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoidGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1NDMyNDIzMjEsImV4cCI6MTU1MjI0MjMyMX0.gOEUo2diNVP16TuBQpgeTRLA_qv3lgd8LufZAoWzOVRL2RAr0cdX5U6sFdHuX4a9OnX9RuLbiEsG5BFnZX_l-g";
 
 // Create an array of thingsboard DEVICE IDs corresponding to your nRF52-DKs
 // You can obtain these using COPY DEVICE ID in the thingsboard web UI
 var DEVICE_IDS = [
-    "f05cdc40-e287-11e8-a0b5-01c0bf03a5b8"
+    "c2039fe0-e23d-11e8-97c1-55cfd1a5b57a"
 ];
 
 // You might want to declare some constants to make it easier to identify

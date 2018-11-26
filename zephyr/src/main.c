@@ -115,7 +115,7 @@ void main(void)
 	while (true) {
 		k_sleep(ATTR_UPDATE_INTERVAL);
 		int currentWeight = sample_weight();
-		if (check_schedule(schedule1) || check_schedule(schedule2) || check_schedule(schedule3)) {
+		if (is_on_schedule()) {
 			maybe_fill_up(currentWeight);
 		}
 		

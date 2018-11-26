@@ -23,6 +23,7 @@
 #include "config.h"
 #include "time.h"
 #include "servo.h"
+#include "fsr.h"
 
 #define MAX_PENDING_PUB_MSGS 8
 #define PUBSUB_STACK_SIZE 1024
@@ -84,6 +85,7 @@ K_MEM_POOL_DEFINE(pub_pool, 16, 128, 8, 4);
 
 void handle_fillUpFood(char *json, int json_len)
 {
+	maybe_fill_up(sample_weight());
 	printf("[%s:%d] parsing: %s\n",	__func__, __LINE__, json);
 }
 
