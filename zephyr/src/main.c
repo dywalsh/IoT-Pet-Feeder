@@ -15,6 +15,7 @@
 #include <misc/printk.h>
 #include <string.h>
 #include <stdio.h>
+#include <gpio.h>
 #include <errno.h>
 
 #if defined(CONFIG_NET_L2_BT)
@@ -26,6 +27,7 @@
 #include "config.h"
 #include "time.h"
 #include "servo.h"
+#include "sensors.h"
 
 
 #define ATTR_UPDATE_INTERVAL 5000
@@ -34,6 +36,11 @@
 #define PRINT_RESULT(func, rc)	\
 	printf("[%s:%d] %s: %d <%s>\n", __func__, __LINE__, \
 	       (func), rc, RC_STR(rc))
+
+#define BTN_PORT	SW0_GPIO_CONTROLLER
+#define BTN			SW0_GPIO_PIN
+
+
 
 static void update_attributes()
 {
@@ -103,6 +110,16 @@ void main(void)
 {
 	int rc;
 
+	struct device *btn_dev;
+
+	u32_t cur_val;
+	u32_t last_val = 1;
+	u32_t cnt = 0;
+
+
+	btn_dev = device_get_binding(BTN_PORT);
+	gpio_pin_configure(btn_dev, BTN, GPIO_DIR_IN | GPIO_PUD_PULL_UP);
+
 	rc = network_setup();
 	PRINT_RESULT("network_setup", rc);
 	if (rc < 0) {
@@ -111,6 +128,8 @@ void main(void)
 
 	setup_servo(device_get_binding(PWM_DRIVER));
 	tb_pubsub_start();
+	sensors_start();
+
 
 	while (true) {
 		k_sleep(ATTR_UPDATE_INTERVAL);
