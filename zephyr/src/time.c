@@ -8,9 +8,9 @@
 
 int time_unix;
 int time_stored_at = 0;
-int schedule1;
-int schedule2;
-int schedule3;
+int schedule1 = -1;
+int schedule2 = -1;
+int schedule3 = -1;
 
 void setTime(int time)
 {

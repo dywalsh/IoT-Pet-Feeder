@@ -106,17 +106,17 @@ int sample_weight()
 		printk("Sampling force sensor...\n");
 
 		sample = sample_sensor(ADC_1ST_CHANNEL_ID);
-
-		if(sample < 200){
+		printf("Sample %d\n", sample);
+		if(sample < 280){
 			printf("Bowl is emptyish\n");
 			bowlFill = 0;
-		} else if(sample >= 200 && sample <= 370){
+		} else if(sample >=  280 && sample <= 645){
 			printf("Bowl is 1/4 fullish\n");
 			bowlFill = 25;
-		} else if(sample > 370 && sample <= 500){
+		} else if(sample > 645 && sample <= 690){
 			printf("Bowl is 1/2 fullish\n");
 			bowlFill = 50;
-		} else if(sample > 500 && sample <= 580){
+		} else if(sample > 690 && sample <= 720){
 			printf("Bowl is 3/4 fullish\n");
 			bowlFill = 75;
 		} else{
