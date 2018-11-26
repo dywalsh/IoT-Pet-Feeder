@@ -1,5 +1,5 @@
 The target system is: Generic -  - arm
-The host system is: Linux - 4.15.0-38-generic - x86_64
+The host system is: Linux - 4.15.0-39-generic - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc 
 Build flags: 
@@ -11,7 +11,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
 
-The C compiler identification is GNU, found in "/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.o"
+The C compiler identification is GNU, found in "/home/darragh/Desktop/git/team10/Servo_FSR_build/build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.o"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-g++ 
@@ -24,14 +24,14 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
 
-The CXX compiler identification is GNU, found in "/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.o"
+The CXX compiler identification is GNU, found in "/home/darragh/Desktop/git/team10/Servo_FSR_build/build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.o"
 
 Performing C SOURCE FILE Test toolchain_is_ok succeeded with the following output:
-Change Dir: /home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/CMakeFiles/CMakeTmp
+Change Dir: /home/darragh/Desktop/git/team10/Servo_FSR_build/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/ninja" "cmTC_1c13b"
-[1/2] Building C object CMakeFiles/cmTC_1c13b.dir/src.c.obj
-[2/2] Linking C executable cmTC_1c13b
+Run Build Command:"/usr/bin/ninja" "cmTC_1ba2d"
+[1/2] Building C object CMakeFiles/cmTC_1ba2d.dir/src.c.obj
+[2/2] Linking C executable cmTC_1ba2d
 /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/bin/ld: warning: cannot find entry symbol _start; defaulting to 0000000000008000
 
 Source file was:

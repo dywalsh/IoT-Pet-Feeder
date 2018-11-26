@@ -194,6 +194,25 @@ rule C_STATIC_LIBRARY_LINKER__arch__arm__core__cortex_m__mpu
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER__lib__json
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__lib__json
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER__lib__libc__minimal
   depfile = $DEP_FILE
   deps = gcc
@@ -205,6 +224,158 @@ rule C_COMPILER__lib__libc__minimal
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__lib__libc__minimal
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__bluetooth__common
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__bluetooth__common
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__bluetooth__host
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__bluetooth__host
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__bluetooth__controller
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__bluetooth__controller
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__net
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__net
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__net__l2__bluetooth
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__net__l2__bluetooth
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__net__ip
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__net__ip
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__net__lib__mqtt
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__net__lib__mqtt
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__net__lib__config
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__net__lib__config
   command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
@@ -270,6 +441,44 @@ rule C_STATIC_LIBRARY_LINKER__drivers__pwm
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER__drivers__serial
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__drivers__serial
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__drivers__entropy
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__drivers__entropy
+  command = $PRE_LINK && ccache /usr/bin/cmake -E remove $TARGET_FILE && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/darragh/CS7NS2/gcc-arm-none-eabi/bin/arm-none-eabi-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER__kernel
   depfile = $DEP_FILE
   deps = gcc
@@ -290,7 +499,7 @@ rule C_STATIC_LIBRARY_LINKER__kernel
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/bin/cmake -H/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor -B/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build
+  command = /usr/bin/cmake -H/home/darragh/Desktop/git/team10/Servo_FSR_build -B/home/darragh/Desktop/git/team10/Servo_FSR_build/build
   description = Re-running CMake...
   generator = 1
 

@@ -32,3 +32,9 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "TRUE")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for each subdirectory.
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/ext/lib/crypto/tinycrypt/cmake_install.cmake")
+
+endif()
+

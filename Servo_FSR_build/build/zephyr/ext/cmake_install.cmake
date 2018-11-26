@@ -34,9 +34,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/ext/lib/cmake_install.cmake")
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/ext/hal/cmake_install.cmake")
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/ext/debug/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/ext/lib/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/ext/hal/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/ext/debug/cmake_install.cmake")
 
 endif()
 

@@ -59,7 +59,7 @@ void main(void)
 	/* capture initial time stamp */
 	time_stamp = k_uptime_get_32();
 	u32_t time_until = get_time_to(1501, 1502) + time_stamp;
-	time_until = time_until / 6;
+	time_until = time_until / 15;
 	printf("%" PRIu32 "\n", time_stamp);
 	printf("%" PRIu32 "\n", time_until);
 
@@ -76,7 +76,7 @@ void main(void)
 			a = sampling();
 			printf("%d sample \n", a);
 			printf("%" PRIu32 "\n", milliseconds_spent);
-			fill_up(pwm_dev, 50);
+			//fill_up(pwm_dev, a);
 			k_sleep(MSEC_PER_SEC);
 			time_stamp = k_uptime_get_32();
 		}

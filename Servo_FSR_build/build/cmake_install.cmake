@@ -1,4 +1,4 @@
-# Install script for directory: /home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor
+# Install script for directory: /home/darragh/Desktop/git/team10/Servo_FSR_build
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/darragh/Desktop/git/team10/Servo_FSR_build/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

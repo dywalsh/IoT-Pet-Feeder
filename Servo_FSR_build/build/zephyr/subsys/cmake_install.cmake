@@ -34,12 +34,15 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/subsys/debug/cmake_install.cmake")
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/subsys/logging/cmake_install.cmake")
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/subsys/fs/cmake_install.cmake")
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/subsys/random/cmake_install.cmake")
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/subsys/storage/cmake_install.cmake")
-  include("/home/darragh/CS7NS2/zephyr/samples/sensor/photoresistor/build/zephyr/subsys/fb/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/debug/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/logging/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/bluetooth/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/shell/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/fs/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/net/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/random/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/storage/cmake_install.cmake")
+  include("/home/darragh/Desktop/git/team10/Servo_FSR_build/build/zephyr/subsys/fb/cmake_install.cmake")
 
 endif()
 

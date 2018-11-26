@@ -295,6 +295,13 @@ _app_data_align = 32;
   KEEP(*(SORT(".net_if_dev.*")))
   __net_if_dev_end = .;
  } > SRAM AT> FLASH
+ net_stack () : ALIGN_WITH_INPUT SUBALIGN(4)
+ {
+  __net_stack_start = .;
+  *(".net_stack.*")
+  KEEP(*(SORT(".net_stack*")))
+  __net_stack_end = .;
+ } > SRAM AT> FLASH
  net_l2_data () : ALIGN_WITH_INPUT SUBALIGN(4)
  {
   __net_l2_data_start = .;

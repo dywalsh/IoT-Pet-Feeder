@@ -7,6 +7,7 @@
 #include <nrf_gpio.h>
 #include <pwm.h>
 #include <gpio.h>
+#include "fsr.h"
 
 #define PWM_DRIVER CONFIG_PWM_NRF5_SW_0_DEV_NAME
 #define PWM_CHANNEL LED0_GPIO_PIN
@@ -64,11 +65,11 @@ void fill_up(struct device *pwm_dev, int sample){
 	while(sample < 100){
 		turn_clockwise(pwm_dev);
 		pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
-		k_sleep(MSEC_PER_SEC);
+		k_sleep(MSEC_PER_SEC/20);
 		turn_anticlockwise(pwm_dev);
 		pwm_pin_set_usec(pwm_dev, YOUR_PIN, 0, 0);
-		sample = sample + 25;
-		k_sleep(MSEC_PER_SEC);
+		sample = sampling();
+		//k_sleep(MSEC_PER_SEC);
 	}
 }
 
