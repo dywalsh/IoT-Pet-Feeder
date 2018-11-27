@@ -2,13 +2,14 @@
 
 This project utilises a force sensor, SG90 servo, NRF52-DK board and thingsboard hosted on a laptop, with a connection to the board established over bluetooth.
 The functionality includes:
-* Weighing of the food bowl
+* Weighing of the food bowl.
 * Scheduled feeding times: breakfast, lunch and dinner.
+* Scheduling fallback when the board loses connection to thingsboard.
 * A servo controlled food release mechnism.
 * Control of the release mechanism via thingsboard switches, on board button and scheduling.
 * Functions for filling up the bowl until full.
-* Change the feeding schedule.
-* View weight history via thingsboard
+* Change the feeding schedule via thingsboard.
+* View weight history via thingsboard.
 
 ## Team Work:
 
