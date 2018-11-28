@@ -150,7 +150,7 @@
         "typeAlias": "rpc_debug_terminal",
         "type": "rpc",
         "title": "New widget",
-        "sizeX": 15,
+        "sizeX": 10,
         "sizeY": 9,
         "config": {
           "targetDeviceAliases": [],
@@ -197,11 +197,12 @@
             "requestTimeout": 500,
             "initialValue": true,
             "setValueMethod": "fillUpFood",
-            "title": "Round switch",
+            "title": "Fill up food",
             "retrieveValueMethod": "none",
             "parseValueFunction": "return true;",
             "convertValueFunction": "return true;",
-            "valueKey": "value"
+            "valueKey": "value",
+            "getValueMethod": "getValue"
           },
           "title": "Fill Up Food",
           "dropShadow": true,
@@ -221,6 +222,48 @@
           ]
         },
         "id": "2c51870e-fd66-7b09-ad38-ad2e1e81c83f"
+      },
+      "67519e5a-d388-7a9c-d1bf-177dc4af1b93": {
+        "isSystemType": true,
+        "bundleAlias": "control_widgets",
+        "typeAlias": "round_switch",
+        "type": "rpc",
+        "title": "New widget",
+        "sizeX": 5,
+        "sizeY": 4,
+        "config": {
+          "targetDeviceAliases": [],
+          "showTitle": false,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "0px",
+          "settings": {
+            "requestTimeout": 500,
+            "initialValue": false,
+            "setValueMethod": "dispenseFood",
+            "title": "Dispense Food",
+            "retrieveValueMethod": "none",
+            "parseValueFunction": "return true;",
+            "convertValueFunction": "return true;"
+          },
+          "title": "New Round switch",
+          "dropShadow": true,
+          "enableFullscreen": false,
+          "widgetStyle": {},
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "decimals": 2,
+          "datasources": [],
+          "targetDeviceAliasIds": [
+            "e9775106-beb3-7cef-f7eb-25976f6cfc29"
+          ]
+        },
+        "id": "67519e5a-d388-7a9c-d1bf-177dc4af1b93"
       }
     },
     "states": {
@@ -239,11 +282,11 @@
               "2adead20-30c5-3944-a5a4-2af441c1ed91": {
                 "sizeX": 13,
                 "sizeY": 6,
-                "row": 2,
-                "col": 10
+                "row": 13,
+                "col": 11
               },
               "17b46634-31c5-8e01-507e-9955763fcff0": {
-                "sizeX": 15,
+                "sizeX": 10,
                 "sizeY": 9,
                 "row": 9,
                 "col": 1
@@ -251,8 +294,14 @@
               "2c51870e-fd66-7b09-ad38-ad2e1e81c83f": {
                 "sizeX": 5,
                 "sizeY": 4,
-                "row": 11,
-                "col": 18
+                "row": 1,
+                "col": 17
+              },
+              "67519e5a-d388-7a9c-d1bf-177dc4af1b93": {
+                "sizeX": 5,
+                "sizeY": 4,
+                "row": 1,
+                "col": 10
               }
             },
             "gridSettings": {
